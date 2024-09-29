@@ -64,7 +64,19 @@ const SendTransaction = () => {
 
       console.log("ID da Transação:", txId); // Exibe o ID da transação no console
     } catch (error) {
-      setStatus(`Erro ao enviar transação: ${error.message}`);
+      // Adiciona uma verificação para garantir que error.message existe
+      if (
+        error.message &&
+        error.message.includes(
+          "Amount withdrawn must be less than or equal than the balance of the Vault"
+        )
+      ) {
+        setStatus(
+          "Erro: Saldo insuficiente de Token Brasil para realizar a transação."
+        );
+      } else {
+        setStatus("Retorne ao Phiz e solicite seus tokens Brasil.");
+      }
       console.error("Erro ao enviar transação:", error); // Log de erro no console
     } finally {
       setLoading(false); // Desativa o indicador de carregamento
@@ -105,10 +117,27 @@ const SendTransaction = () => {
                 </Link>
               )}
             </Alert>
-          ) : (
-            <Typography variant="body1" color="textSecondary">
+          ) : status === "Retorne ao Phiz e solicite seus tokens Brasil." ? (
+            <Alert severity="warning" style={{ textAlign: "center" }}>
               {status}
-            </Typography>
+              <br />
+              <Link
+                href="https://bit.ly/phiz-chat"
+                target="_blank"
+                rel="noopener noreferrer"
+                underline="hover"
+              >
+                Solicite seus tokens Brasil aqui
+              </Link>
+            </Alert>
+          ) : status === "Enviando transação..." ? (
+            <Alert severity="warning" style={{ textAlign: "center" }}>
+              {status}
+            </Alert>
+          ) : (
+            <Alert severity="error" style={{ textAlign: "center" }}>
+              {status}
+            </Alert>
           )}
         </Box>
       )}

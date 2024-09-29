@@ -55,7 +55,6 @@ function App() {
 
         {/* Seção de Autenticação */}
         <Section>
-          <SubTitle>Autenticação</SubTitle>
           <Authenticate /> {/* Componente de login e logout */}
         </Section>
 
