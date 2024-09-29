@@ -7,43 +7,40 @@ import Link from "@mui/material/Link"; // Importa componente de link do Material
 import Box from "@mui/material/Box"; // Para organizar layout
 import Alert from "@mui/material/Alert"; // Importa componente de alerta para mensagens de sucesso
 
-const SendTransaction = () => {
+const AddTokenBrasil = () => {
   const [status, setStatus] = useState(""); // Estado para mostrar o status da transação
   const [transactionId, setTransactionId] = useState(null); // Estado para armazenar o ID da transação
   const [loading, setLoading] = useState(false); // Estado para controlar o indicador de carregamento
 
-  const sendTx = async () => {
+  const addToken = async () => {
     setLoading(true); // Ativa o indicador de carregamento
-    setStatus("Enviando transação..."); // Mostra status de envio
+    setStatus("Adicionando Token Brasil..."); // Mostra status de envio
 
     try {
-      const amount = "10.0"; // Valor a ser transferido
-      const recipient = "0xcee767cac4c076fb"; // Endereço do destinatário na mainnet
-
-      // Envia a transação para a rede Flow Mainnet
+      // Envia a transação para adicionar o Token Brasil
       const txId = await fcl.mutate({
         cadence: `
-        import FungibleToken from 0xf233dcee88fe0abe
-        import brasil from 0x7bf07d719dcb8480
+     import FungibleToken from 0xf233dcee88fe0abe
+     import brasil from 0x7bf07d719dcb8480
 
-        transaction(amount: UFix64, recipient: Address) {
-          let sentVault: @{FungibleToken.Vault}
+     transaction {
+        prepare(signer: auth(Storage, Capabilities) &Account) {
+            if signer.storage.borrow<&brasil.Vault>(from: /storage/brasilVault ) == nil {
+                signer.storage.save(<- brasil.createEmptyVault(vaultType: Type<@brasil.Vault>()), to: /storage/brasilVault)
+            }
 
-          prepare(signer: auth(Storage, BorrowValue) &Account) {
-            let vaultRef = signer.storage.borrow<auth(FungibleToken.Withdraw) &brasil.Vault>(from: /storage/brasilVault)
-              ?? panic("Não foi possível acessar o Vault do proprietário!")
-
-            self.sentVault <- vaultRef.withdraw(amount: amount)
-          }
-
-          execute {
-            let recipientAccount = getAccount(recipient)
-            let receiverRef = recipientAccount.capabilities.borrow<&{FungibleToken.Receiver}>(/public/brasilReceiver)!
-            receiverRef.deposit(from: <-self.sentVault)
-          }
+            if signer.capabilities.exists(/public/brasilReceiver) == false {
+                let receiverCapability = signer.capabilities.storage.issue<&brasil.Vault>(/storage/brasilVault)
+                signer.capabilities.publish(receiverCapability, at: /public/brasilReceiver)
+            }
+       
+            if signer.capabilities.exists(/public/brasilMetadata) == false {
+                let balanceCapability = signer.capabilities.storage.issue<&brasil.Vault>(/storage/brasilVault)
+                signer.capabilities.publish(balanceCapability, at: /public/brasilMetadata)
+            }
         }
+      }
         `,
-        args: (arg, t) => [arg(amount, t.UFix64), arg(recipient, t.Address)], // Argumentos para a transação
         proposer: fcl.currentUser().authorization,
         payer: fcl.currentUser().authorization,
         authorizations: [fcl.currentUser().authorization],
@@ -57,15 +54,17 @@ const SendTransaction = () => {
       const txStatus = await fcl.tx(txId).onceSealed();
 
       if (txStatus.status === 4) {
-        setStatus("Transação bem-sucedida!"); // Exibe mensagem de sucesso
+        setStatus("Token Brasil adicionado com sucesso!");
       } else {
-        setStatus(`Erro ao processar a transação: Status ${txStatus.status}`);
+        setStatus(
+          `Erro ao adicionar o Token Brasil: Status ${txStatus.status}`
+        );
       }
 
       console.log("ID da Transação:", txId); // Exibe o ID da transação no console
     } catch (error) {
-      setStatus(`Erro ao enviar transação: ${error.message}`);
-      console.error("Erro ao enviar transação:", error); // Log de erro no console
+      setStatus(`Erro ao adicionar o Token Brasil: ${error.message}`);
+      console.error("Erro ao adicionar o Token Brasil:", error); // Log de erro no console
     } finally {
       setLoading(false); // Desativa o indicador de carregamento
     }
@@ -76,24 +75,22 @@ const SendTransaction = () => {
       <Button
         variant="contained"
         color="primary"
-        onClick={sendTx}
+        onClick={addToken}
         disabled={loading}
         style={{ marginBottom: "20px" }}
       >
         {loading ? (
           <CircularProgress size={24} color="inherit" />
         ) : (
-          "Enviar Transação"
+          "Adicionar Token Brasil"
         )}
       </Button>
 
-      {/* Exibe o status da transação */}
       {status && (
         <Box my={2} width="100%" display="flex" justifyContent="center">
-          {status === "Transação bem-sucedida!" ? (
+          {status === "Token Brasil adicionado com sucesso!" ? (
             <Alert severity="success" style={{ textAlign: "center" }}>
               {status} <br />
-              {/* Link para visualizar a transação no FlowScan */}
               {transactionId && (
                 <Link
                   href={`https://www.flowscan.io/tx/${transactionId}`}
@@ -116,4 +113,4 @@ const SendTransaction = () => {
   );
 };
 
-export default SendTransaction;
+export default AddTokenBrasil;

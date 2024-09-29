@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Authenticate from "./Authenticate"; // Componente para login/logout
 import GetLatestBlock from "./GetLatestBlock"; // Componente para ver o último bloco
 import SendTransaction from "./SendTransaction"; // Componente para enviar transações
+import AddTokenBrasil from "./AddTokenBrasil"; // Componente para adicionar o Token Brasil
 
 // Estilos globais para o Wrapper principal
 const Wrapper = styled.div`
@@ -58,16 +59,22 @@ function App() {
           <Authenticate /> {/* Componente de login e logout */}
         </Section>
 
+        {/* Seção para adicionar o Token Brasil */}
+        <Section>
+          <SubTitle>Adicionar Token Brasil</SubTitle>
+          <AddTokenBrasil /> {/* Componente para adicionar o Token Brasil */}
+        </Section>
+
         {/* Seção de Blocos */}
         <Section>
           <SubTitle>Último Bloco na Rede Flow</SubTitle>
-          <GetLatestBlock />
+          <GetLatestBlock /> {/* Componente para obter o último bloco */}
         </Section>
 
         {/* Seção de Transações */}
         <Section>
           <SubTitle>Enviar Transação</SubTitle>
-          <SendTransaction />
+          <SendTransaction /> {/* Componente para enviar transações */}
         </Section>
       </Container>
     </Wrapper>
