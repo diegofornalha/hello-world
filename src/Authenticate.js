@@ -4,7 +4,6 @@ import Button from "@mui/material/Button"; // Importa o botão do Material-UI
 import Typography from "@mui/material/Typography"; // Importa tipografia do Material-UI
 import Box from "@mui/material/Box"; // Para organizar o layout
 import CheckCircleIcon from "@mui/icons-material/CheckCircle"; // Ícone de status online
-import Avatar from "@mui/material/Avatar"; // Avatar do usuário
 
 const Authenticate = () => {
   const [user, setUser] = useState({ loggedIn: false }); // Estado para o usuário
