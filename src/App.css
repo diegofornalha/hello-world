@@ -1,38 +1,109 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f4f4; /* Fundo claro */
+  color: #333; /* Cor do texto */
+}
+
 .App {
   text-align: center;
+  padding: 20px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+h1 {
+  color: #a00000; /* Vermelho escuro para o título */
+  font-size: 2.5rem;
+  margin-bottom: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+h2 {
+  color: #a00000; /* Vermelho escuro para subtítulos */
+  font-size: 1.8rem;
+  margin-bottom: 10px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+input[type="text"] {
+  width: 300px;
+  padding: 10px;
+  margin: 10px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+button {
+  background-color: #a00000; /* Cor dos botões vermelhos */
   color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px; /* Bordas arredondadas */
+  font-size: 1rem;
+  cursor: pointer;
+  margin: 10px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.App-link {
-  color: #61dafb;
+button:hover {
+  background-color: #c0392b; /* Vermelho mais claro ao passar o mouse */
+  transform: scale(1.05); /* Efeito de zoom ao passar o mouse */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+button:active {
+  background-color: #900; /* Cor mais escura ao clicar */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  border: 1px solid #a00000; /* Cor das bordas vermelhas */
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background-color: #a00000; /* Fundo vermelho para o cabeçalho da tabela */
+  color: white;
+  font-weight: bold;
+}
+
+td {
+  background-color: #fdfdfd;
+}
+
+.container {
+  background-color: white; /* Fundo branco para o container */
+  padding: 20px;
+  border-radius: 12px; /* Bordas arredondadas */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Leve sombra para destacar o conteúdo */
+  max-width: 900px;
+  margin: 0 auto; /* Centraliza o container */
+}
+
+a {
+  color: #a00000; /* Links com a mesma cor dos botões */
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Estilos para dispositivos móveis */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
   }
-  to {
-    transform: rotate(360deg);
+
+  input[type="text"] {
+    width: 90%; /* Ocupa quase toda a largura em dispositivos móveis */
+  }
+
+  button {
+    width: 100%; /* Botões ocupam 100% da largura em dispositivos móveis */
   }
 }

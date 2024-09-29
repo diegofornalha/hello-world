@@ -1,13 +1,32 @@
 body {
   margin: 0;
+  padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #f5f5f5; /* Fundo suave para reduzir fadiga visual */
+  color: #333; /* Cor de texto mais suave, evitando preto puro */
+  line-height: 1.6; /* Aumenta o espaçamento entre linhas para melhor legibilidade */
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: 'Fira Code', source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+  background-color: #e0e0e0; /* Fundo suave para blocos de código */
+  padding: 0.2em 0.4em; /* Adiciona espaçamento ao redor do código */
+  border-radius: 4px; /* Cantos arredondados para uma aparência mais moderna */
+  color: #d63384; /* Cor diferenciada para o código, destacando-o */
+}
+
+/* Melhorando a responsividade geral */
+html {
+  font-size: 16px; /* Tamanho de fonte base */
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 15px; /* Ajusta o tamanho da fonte em telas menores */
+  }
 }
